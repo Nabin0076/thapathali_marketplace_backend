@@ -8,9 +8,11 @@ const { attachCookieToResponse } = require('../utils/jwt')
 
 const signup = async (req,res)=>{
     try {
-        const {username, password, email, gender} = req.body;
+        const {username, email, password, gender} = req.body;
+        if (gender<0 || gender>1)
+            throw new httpError("Invalid gender", 400);
         if(!username || !email || !password || !gender){
-            throw new httpError("Invalid Credentials");
+            throw new httpError("Invalid Credentials", 400);
         }
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -25,6 +27,7 @@ const signup = async (req,res)=>{
             throw new HttpError(err, 500);
         }
         res.status(200).send("registered successfully")
+        console.log("registered sucessfully")
        }
     catch(httpError){
        res.status(httpError.status).send(httpError.msg);

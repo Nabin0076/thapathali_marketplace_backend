@@ -13,7 +13,7 @@ category_name VARCHAR(255) UNIQUE
 );
 
 create TABLE Orders(
-order_id INT PRIMARY KEY,
+order_id serial PRIMARY KEY,
 order_type VARCHAR(255) NOT NULL,
 date DATE default CURRENT_DATE,
 user_id INT,
